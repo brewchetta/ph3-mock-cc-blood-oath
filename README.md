@@ -14,9 +14,11 @@ You've been approached by your local cult leaders to build out a foundation for 
 
 ## Code Overview
 
-You can now view all of your Python files for your models in the `lib` folder. They will be automagically available for you so long as you use the `python debug.py` file to test your code.
+You can now view all of your Python files for your models in the `lib` folder. They will be automagically available for you so long as you use the `python -i index.py` file to test your code.
 
-Through this file, we've provided to you a console that you can use to test your code. To enter a console session, run `python debug.py` from the command line. You'll be able to test out the functionality that you write there. Take a look at that file to see how you can pre-define variables and create object instances, rather than manually doing it in every single console session.
+Through this file, we've provided to you a console that you can use to test your code. To enter a console session, run `python -i index.py` from the command line. You'll be able to test out the functionality that you write there. Take a look at that file to see how you can pre-define variables and create object instances, rather than manually doing it in every single console session.
+
+If you would prefer to use `ipdb` then uncomment the last line in `index.py` and run `python index.py` instead.
 
 
 
@@ -43,114 +45,179 @@ Questions you should ask yourself:
 * Should I write any other methods?
 * Am I following _Single Source of Truth_?
 
-### A note about notation
-When you see a `'#'`, this means the functionality will be related to the instance, a `'.'`, the class. 
+## Initializers and Properties
 
+### `Cult`
 
-**`Cult`**
+```python
+def __init__(name, location, founding_year, slogan)
+```
+- cult should be initialized with a name, location, founding_year, and slogan
 
-* `Cult#name`
-  * returns a `String` that is the cult's name
-* `Cult#location`
-  * returns a `String` that is the city where the cult is located
-* `Cult#founding_year`
-  * returns a `Integer` that is the year the cult was founded
-* `Cult#slogan`
-  * returns a `String` that is this cult's slogan
-* `Cult#recruit_follower`
-  * takes in an argument of a `Follower` instance and adds them to this cult's list of followers
-* `Cult#cult_population`
-  * returns a `Integer` that is the number of followers in this cult
-* `Cult.all`
-  * returns an `List` of all the cults
-* `Cult.find_by_name`
-  * takes a `String` argument that is a name and returns a `Cult` instance whose name matches that argument
-* `Cult.find_by_location`
-  * takes a `String` argument that is a location and returns an `List` of cults that are in that location
-* `Cult.find_by_founding_year`
-  * takes a `Integer` argument that is a year and returns a list of all the cults founded in that year
+```python
+@property
+def name(self)
 
-**`Follower`**
+@name.setter
+def name(name)
+```
+- returns the cult's name
+- name must be of type `str`
+- name must be between 1 and 20 characters long
+- `raise Exception` if the setter fails
 
-* `Follower#name`
-  * returns a `String` that is the follower's name
-* `Follower#age`
-  * returns a `Integer` that is the age of the follower
-* `Follower#life_motto`
-  * returns a `String` that is the follower's life motto
-* `Follower#cults`
-  * returns an `List` of this follower's cults
-* `Follower#join_cult`
-  * takes in an argument of a `Cult` instance and adds this follower to the cult's list of followers
-* `Follower.all`
-  * returns an `List` of all the followers
-* `Follower.of_a_certain_age`
-  * takes a `Integer` argument that is an age and returns an `List` of followers who are the given age or older
+```python
+@property
+def founding_year()
 
-**`BloodOath`**
+@founding_year.setter
+def founding_year(new_founding_year)
+```
+- returns the cult's founding year
+- founding year must be of type `int`
+- founding year cannot be beyond the current year
+- founding year cannot be changed once set
+- *Hint: `hasattr`*
 
-* `BloodOath#initiation_date`
-  * returns a `String` that is the initiation date of this blood oath in the format _YYYY-MM-DD_.
-* `BloodOath.all`
-  * returns an `List` of all the blood oaths
+### `Follower`
 
----
+```python
+def __init__(name, age, life_motto)
+```
+- cult should be initialized with a name, age, and life_motto
 
-### Advanced Methods - Analytics!
+```python
+@property
+def age()
 
-Our cult social network platform is working well. Let's first make a commit!
+@age.setter
+def age(new_age)
+```
+- returns the follower's age
+- age should be of type `int`
+- age should be between 0 and 120 inclusive
+- `raise Exception` if the setter fails
 
-Now we want to build out some useful features so `Cult`s and `Follower`s and get more value out of our app.
+### `BloodOath`
 
-**`Cult`**
+```python
+def __init__(cult, follower)
+```
+- BloodOath should be initialized with a cult and follower
 
-* `Cult#average_age`
-  * returns a `Float` that is the average age of this cult's followers
-* `Cult#my_followers_mottos`
-  * prints out all of the mottos for this cult's followers
-* `Cult.least_popular`
-  * returns the `Cult` instance who has the least number of followers :(
-* `Cult.most_common_location`
-  * returns a `String` that is the location with the most cults
+```python
+@property
+def cult(self)
 
-**`Follower`**
+@cult.setter
+def cult(new_cult)
+```
+- returns the cult for this blood oath
+- the cult should be of type `Cult`
+- should not be able to change the cult once set (hint: *hasattr*)
+- `raise Exception` if the setter fails
 
-* `Follower#my_cults_slogans`
-  * prints out all of the slogans for this follower's cults
-* `Follower.most_active`
-  * returns the `Follower` instance who has joined the most cults
-* `Follower.top_ten`
-  * returns an `List` of followers; they are the ten most active followers
+```python
+@property
+def follower()
 
-**`BloodOath`**
+@follower.setter
+def follower(follower)
+```
+- returns the follower for this blood oath
+- the follower should be of type `Follower`
+- should not be able to change the follower once set (hint: *hasattr*)
+- `raise Exception` if the setter fails
 
-* `BloodOath.first_oath`
-  * returns the `Follower` instance for the follower that made the very first blood oath
+```python
+BloodOath.all_oaths
+```
+- returns a `list` of all the blood oaths
 
----
+## Object Relationship Methods
 
-### BONUS!
+### `Cult`
 
-Our platform is done! Let's commit our code!
+```python
+def get_blood_oaths()
+```
+- returns a `list` of blood oaths for that cult
+- blood oaths are of type `BloodOath`
 
-Now one highly requested feature from `Follower`s using your app that you plan to paywall ($$$) is to see your fellow cult members. See if you can implement this method.
+```python
+def get_followers()
+```
+- returns a `list` of **unique** followers for that cult
+- followers are of type `Follower`
 
-* `Follower#fellow_cult_members`
-  * returns a unique `List` of followers who are in the same cults as you
+### `Follower`
 
-A highly requested feature from `Cult`s using your app that you plan to paywall ($$$) is to restrict ages for recruits. See if you can implement this functionality.
+```python
+def get_blood_oaths()
+```
+- returns a `list` of blood oaths for that follower
+- blood oaths are of type `BloodOath`
 
-* `Cult#minimum_age`
-  * returns a `Integer` that is the minimum age required for followers joining this cult
-* `Cult#recruit_follower`
-  * takes in an argument of a `Follower` instance and adds them to this cult's list of followers
-  * NOW this is changed such that if the given `Follower` instance is not of age:
-    * do not let them join the cult
-    * print out a friendly message informing them that they are too young
-* `Follower#join_cult`
-  * takes in an argument of a `Cult` instance and adds this follower to the cult's list of followers
-  * NOW this is changed such that if you don't meet the minimum age requirement of the given `Cult` instance:
-    * do not let them join the cult
-    * print out a friendly message informing them that they are too young
+```python
+def get_cults()
+```
+- returns a `list` of **unique** cults for that follower
+- cults are of type `Cult`
 
-Congrats on finishing your cult social network platform. Time to rake in the $$$!
+## Aggregate and Association Methods
+
+### `Cult`
+
+```python
+def recruit_follower(follower)
+```
+- Takes an argument of a `Follower` instance and associates that follower with the cult
+- *Hint: What connects a follower to a cult?*
+
+```python
+def get_cult_population()
+```
+- returns an `int` that is the number of followers in this cult
+
+```python
+def get_average_age()
+```
+- returns a `float` that is the average age of this cult's followers
+- returns `0.0` if there are no followers
+
+```python
+def get_follower_mottos()
+```
+- returns a `list` of mottos for each of this cult's followers
+
+```python
+@classmethod
+def find_by_name(cls, name)
+```
+- takes a `str` argument that is a name and returns a `Cult` instance whose name matches that argument
+- return `None` if no cult is found with that name
+
+```python
+@classmethod
+def get_least_popular(cls)
+```
+- returns the `Cult` instance that has the least number of followers
+
+```python
+def find_follower_by_name(name)
+```
+- takes a `str` argument that is a name and returns a `list` of followers who have that name in the cult
+
+### `Follower`
+
+```python
+def get_number_of_oaths()
+```
+- returns an `int` for the number of blood oaths that follower has taken
+- returns `0` if that follower has taken no oaths
+
+```python
+def get_oldest_cult()
+```
+- returns the cult with the earliest starting year for that follower
+- returns `None` if that follower isn't part of any cult

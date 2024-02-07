@@ -5,7 +5,10 @@ from faker import Faker
 # for example: f1 = Follower(name=faker.name(), age=20, life_motto="Yay mottos!")
 faker = Faker()
 
+##### TEST DATA ##########
+
 # create test data here!
 
-# uncomment the following line if you'd prefer to use ipdb
+##### ######### ##########
+
 # import ipdb; ipdb.set_trace()

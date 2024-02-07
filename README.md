@@ -78,6 +78,7 @@ def founding_year(new_founding_year)
 - founding year cannot be beyond the current year
 - founding year cannot be changed once set
 - *Hint: `hasattr`*
+- `raise Exception` if the setter fails
 
 ### `Follower`
 
@@ -204,7 +205,7 @@ def get_least_popular(cls)
 - returns the `Cult` instance that has the least number of followers
 
 ```python
-def find_follower_by_name(name)
+def find_followers_by_name(name)
 ```
 - takes a `str` argument that is a name and returns a `list` of followers who have that name in the cult
 
